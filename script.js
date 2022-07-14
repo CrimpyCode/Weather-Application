@@ -26,12 +26,12 @@ let weather = {
     },
     search: function(){
         this.fetchWeather(document.querySelector(".search-bar").value)
+        background.fetchBackground(document.querySelector(".search-bar").value)
     }
 }
 
 document.querySelector(".search button").addEventListener("click", function() {
     weather.search()
-    console.log(background.fetchBackground(city))
 })
 
 document.querySelector(".search-bar").addEventListener("keyup",function (event){
@@ -49,7 +49,9 @@ let background = {
             "https://api.unsplash.com/search/photos/?client_id="+this.apiKey+"&query="+city
         )
         .then(res => res.json())
-        .then(data => document.body.style.backgroundImage.src = data.results[1].urls.regular)
+        .then(data => {
+            document.body.style.backgroundImage = `url(${data.results[Math.floor(Math.random()*10)].urls.regular})`
+        })
     }
 }
 
